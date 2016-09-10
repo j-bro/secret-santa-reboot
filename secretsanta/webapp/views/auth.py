@@ -1,27 +1,25 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect
-
-# Create your views here.
-
-
-def index(request):
-    # latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': None}
-    return render(request, 'webapp/index.html', context)
-
-
-@login_required
-def home(request):
-    return render(request, 'webapp/home.html')
 
 
 def signup_user(request):
+    """
+
+    :param request:
+    :return:
+    """
     return render(request, 'webapp/signup.html')
 
 
 def login_user(request):
+    """
+
+    :param request:
+    :return:
+    """
+    if request.user.is_authenticated():
+        return redirect('home')
+
     username = password = ''
     if request.method == 'POST':
         username = request.POST['inputUsername']
@@ -40,5 +38,10 @@ def login_user(request):
 
 
 def logout_user(request):
+    """
+
+    :param request:
+    :return:
+    """
     logout(request)
     return redirect('index')

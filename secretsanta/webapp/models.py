@@ -1,14 +1,22 @@
+from datetime import date
+
 from django.db import models
-from django.contrib.auth.models import User, Group
-
-# Create your models here.
+from django.contrib.auth.models import User
 
 
-class PersonGroup(Group):
+class PersonGroup(models.Model):
     """
     A group of users that can participate in an exchange.
     """
-    manager = models.ForeignKey(User, null=False)
+    name = models.CharField(max_length=80)
+    manager = models.ForeignKey(User, null=False, related_name='manager')
+    members = models.ManyToManyField(User, related_name='members')
+
+    def get_current_exchanges(self):
+        return self.exchanges.filter(end_date__gt=date.today())
+
+    def __str__(self):
+        return self.name
 
 
 class Exchange(models.Model):
@@ -17,7 +25,7 @@ class Exchange(models.Model):
     Structured Property of a Group Model
     """
     name = models.CharField(max_length=80, null=False, blank=False)
-    group = models.ForeignKey(PersonGroup, null=False)
+    group = models.ForeignKey(PersonGroup, null=False, related_name='exchanges')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     end_date = models.DateField(null=False)
@@ -45,8 +53,8 @@ class GiftList(models.Model):
     """
     Gift lists for a participant in an exchange
     """
-    user = models.ForeignKey(User,null=False)
-    exchange = models.ForeignKey(Exchange, )
+    user = models.ForeignKey(User, null=False)
+    exchange = models.ForeignKey(Exchange)
     list = models.TextField(null=False, default='')
 
     def __str__(self):

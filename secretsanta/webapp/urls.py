@@ -15,12 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from . import views
+from webapp.views import main, group, auth, exchange
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^login', views.login_user, name='login'),
-    url(r'^logout', views.logout_user, name='logout'),
-    url(r'^signup', views.signup_user, name='signup'),
-    url(r'^home', views.home, name='home'),
+    url(r'^$', main.index, name='index'),
+    url(r'^login', auth.login_user, name='login'),
+    url(r'^logout', auth.logout_user, name='logout'),
+    url(r'^signup', auth.signup_user, name='signup'),
+    url(r'^home', main.home, name='home'),
+
+    url(r'^group/$', group.GroupListView.as_view(), name='group_list'),
+    url(r'^group/create/$', group.GroupCreateView.as_view(), name='group_create'),
+    url(r'^group/(?P<pk>[0-9]+)/$', group.GroupDetailView.as_view(), name='group_detail'),
+
+    url(r'^exchange/create/$', exchange.ExchangeCreateView.as_view(), name='exchange_create'),
+    url(r'^exchange/(?P<pk>[0-9]+)/$', exchange.ExchangeDetailView.as_view(), name='exchange_detail'),
 ]

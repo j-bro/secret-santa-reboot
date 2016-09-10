@@ -1,0 +1,51 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>{{ object.name }}</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Group Members</h2>
+                <div class="bs-component">
+                    <ul class="list-group">
+                        {% for member in object.members.all %}
+                            <li class="list-group-item">
+                                {% if member.get_full_name %}
+                                    {{ member.get_full_name }} ({{ member.username }})
+                                {% else %}
+                                    {{ member.username }}
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <h2>Active Exchanges</h2>
+                <div class="bs-component">
+                    {% for exchange in object.get_current_exchanges %}
+                        <a href="{% url 'exchange_detail' exchange.id %}">
+                            <li class="list-group-item">
+                                {{ exchange.name }}
+                            </li>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

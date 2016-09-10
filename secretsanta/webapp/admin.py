@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Exchange, PersonGroup, GiftList, Draw
+from webapp.models import Exchange, PersonGroup, GiftList, Draw
 
 # Register your models here.
 

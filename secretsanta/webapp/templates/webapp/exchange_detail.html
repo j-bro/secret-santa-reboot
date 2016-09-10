@@ -1,0 +1,93 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block custom_head %}
+    {% load static %}
+    <script src="{% static 'webapp/todo.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>{{ object.name }}</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-4">
+                <h2>Exchange Info</h2>
+                <div class="bs-component">
+                    {% if not object.active %}
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Exchange not active</h3>
+                            </div>
+                            <div class="panel-body">
+                                This exchange is not currently active. This may be because not all members have joined yet or because the group manager has not activated the exchange.
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Price Cap</div>
+                        <div class="panel-body">
+                            {{ object.price_cap }}
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Exchange Date</div>
+                        <div class="panel-body">
+                            {{ object.end_date }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <h2>Members</h2>
+                <div class="well bs-component">
+                    <ul class="list-group">
+                        {% for member in object.group.members.all %}
+                            <li class="list-group-item">
+                                {% if member.get_full_name %}
+                                    {{ member.get_full_name }} ({{ member.username }})
+                                {% else %}
+                                    {{ member.username }}
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        <div class="col-lg-4">
+            <h2>Your Gift List</h2>
+                <div class="well bs-component">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <span class="badge"><a href="#">x</a></span>
+                            Populate
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge"><a href="#">x</a></span>
+                            with
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge"><a href="#">x</a></span>
+                            Javascript!
+                        </li>
+                    </ul>
+                    <input type="text" class="form-control add-todo" placeholder="Add Gift Idea">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

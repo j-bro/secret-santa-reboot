@@ -1,0 +1,40 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Your Groups</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <ul class="list-group">
+                {% for group in user_groups %}
+                    <a href="{% url 'group_detail' group.id %}">
+                        <li class="list-group-item">
+                            <span class="badge">{{ group.members.count }} members</span>
+                            {{ group.name }}
+                        </li>
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-5">
+            <a class="btn btn-primary" href="{% url 'group_create' %}">Create Group</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

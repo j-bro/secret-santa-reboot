@@ -19,7 +19,7 @@ def signup_user(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            # ...
+            form.save()
             # redirect to a new URL:
             return HttpResponseRedirect('/thanks/')
 
@@ -44,7 +44,6 @@ def login_user(request):
         form = AuthenticationForm(request, data=request.POST)
         # check whether it's valid:
         if form.is_valid():
-            username = password = ''
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
 

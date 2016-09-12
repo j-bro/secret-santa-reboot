@@ -14,10 +14,14 @@ class ExchangeDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ExchangeDetailView, self).get_context_data(**kwargs)
-        gift_list_obj = GiftList.objects.all().first()
-        # gift_list_obj = GiftList.objects.filter(exchange=object).filter(user=self.request.user).first()
-        context['gift_list'] = json.dumps(gift_list_obj.list)
-        # TODO fix non existant gift list
+
+        if self.object.group.manager == self.request.user:
+            context['exchange_editable'] = True
+
+        # TODO filter not working
+        gift_list_obj = GiftList.objects.filter(exchange=self.object, user=self.request.user).first()
+        context['gift_list'] = json.dumps(gift_list_obj.gift_list)
+        # TODO fix if gift list doesn't exist
         return context
 
 

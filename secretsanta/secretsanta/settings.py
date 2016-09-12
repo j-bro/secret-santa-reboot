@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'webapp.apps.WebappConfig',
     'bootstrap3',
+    'django.contrib.humanize',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

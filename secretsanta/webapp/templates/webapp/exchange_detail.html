@@ -4,7 +4,9 @@
 
 {% block custom_head %}
     {% load static %}
-    <script src="{% static 'webapp/todo.js' %}"></script>
+    {% load humanize %}
+
+    <script src="{% static 'webapp/giftlist.js' %}"></script>
 {% endblock %}
 
 {% block header %}
@@ -12,6 +14,11 @@
         <div class="row">
             <div class="col-xs-12">
                 <h1>{{ object.name }}</h1>
+                {% if object.group.manager.get_full_name %}
+                <h4>Created for group {{ object.group.name }} by {{ object.group.manager.get_full_name }}</h4>
+                {% else %}
+                <h4>Created for group {{ object.group.name }} by {{ object.group.manager.username }}</h4>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -20,29 +27,54 @@
 {% block content %}
     <div class="container">
 
+        {% if object.description %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Message from group manager</div>
+                        <div class="panel-body">
+                            <p>{{ object.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12">
                 <h2>Exchange Info</h2>
                 <div class="bs-component">
-                    {% if not object.active %}
+                    {% if not object.activated_date %}
                         <div class="panel panel-warning">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Exchange not active</h3>
                             </div>
                             <div class="panel-body">
-                                This exchange is not currently active. This may be because not all members have joined yet or because the group manager has not activated the exchange.
+                                <p>This exchange has not been activated by the group manager.</p>
+                                {% if exchange_editable %}
+                                    <a href="#" class="btn btn-success btn-block">Activate Exchange</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Exchange active!</h3>
+                            </div>
+                            <div class="panel-body">
+                                The exchange was activated on {{ object.activated_date }}
                             </div>
                         </div>
                     {% endif %}
 
-                    <div class="panel panel-default">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">Price Cap</div>
                         <div class="panel-body">
-                            {{ object.price_cap }}
+                            <a href="#" id="price-cap" data-type="text" data-pk="" data-url="" data-title="Enter price cap">$ {{ object.price_cap|floatformat:2|intcomma }}</a>
                         </div>
                     </div>
 
-                    <div class="panel panel-default">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">Exchange Date</div>
                         <div class="panel-body">
                             {{ object.end_date }}
@@ -51,37 +83,79 @@
                 </div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12">
                 <h2>Members</h2>
-                <div class="well bs-component">
-                    <ul class="list-group">
-                        {% for member in object.group.members.all %}
-                            <li class="list-group-item">
-                                {% if member.get_full_name %}
-                                    {{ member.get_full_name }} ({{ member.username }})
-                                {% else %}
-                                    {{ member.username }}
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <div class="bs-component">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Your drawn member</div>
+                        <div class="panel-body">
+                            {% if not object.activated_date %}
+                                <button type="button" class="btn btn-block disabled">Draw has not yet occurred</button>
+                            {% else %}
+                                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#drawMemberModal">Click here to view</button>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">All group members</div>
+                        <ul class="list-group">
+                            {% for member in object.group.members.all %}
+                                <li class="list-group-item">
+                                    {% if member.get_full_name %}
+                                        {{ member.get_full_name }} ({{ member.username }})
+                                    {% else %}
+                                        {{ member.username }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-        <div class="col-lg-4">
-            <h2>Your Gift List</h2>
+            <div id="drawMemberModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Your have drawn: <strong>MEMBER NAME</strong></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Gift list</div>
+                                <ul class="list-group">
+                                    {% for member in object.group.members.all %}
+                                        <li class="list-group-item">
+                                            {% if member.get_full_name %}
+                                                {{ member.get_full_name }} ({{ member.username }})
+                                            {% else %}
+                                                {{ member.username }}
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <h2>Your Gift List</h2>
                 <div class="well bs-component">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <span class="badge"><a href="#">x</a></span>
+                            <span class="badge"><a class="text-danger" href="#">x</a></span>
                             Populate
                         </li>
                         <li class="list-group-item">
-                            <span class="badge"><a href="#">x</a></span>
+                            <span class="badge"><a class="text-danger" href="#">x</a></span>
                             with
                         </li>
                         <li class="list-group-item">
-                            <span class="badge"><a href="#">x</a></span>
+                            <span class="badge"><a class="text-danger" href="#">x</a></span>
                             Javascript!
                         </li>
                     </ul>
@@ -90,4 +164,16 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block footer %}
+    <script>
+        //turn to inline mode
+        $.fn.editable.defaults.mode = 'inline';
+        $(document).ready(function() {
+            $('#username').editable();
+        });
+    </script>
+
+    {{ block.super }}
 {% endblock %}

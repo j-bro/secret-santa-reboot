@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="{% static 'webapp/style.css' %}">
     {% bootstrap_javascript %}
 
+    {# X-editable for bootstrap #}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
     {% block custom_head %}{% endblock %}
 
     {# Display django.contrib.messages as Bootstrap alerts #}
@@ -37,7 +41,18 @@
                 </div>
                 <div class="navbar-collapse collapse" id="navbar-main">
                     <ul class="nav navbar-nav">
+                        <li><a href="{% url 'how_it_works' %}">How It Works</a></li>
                         {% if request.user.is_authenticated %}
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="exchanges-menu">Your Exchanges <span class="caret"></span></a>
+                                <ul class="dropdown-menu" aria-labelledby="exchanges-menu">
+                                {% for person_group in user.person_groups.all %}
+                                    {% for user_exchange in person_group.exchanges.all %}
+                                        <li><a href="{% url 'exchange_detail' user_exchange.pk %}">{{ user_exchange.name }}</a></li>
+                                    {% endfor %}
+                                {% endfor %}
+                                </ul>
+                            </li>
                             <li><a href="{% url 'group_list' %}">Your Groups</a></li>
                         {% endif %}
                     </ul>
@@ -45,8 +60,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.user.is_authenticated %}
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">{{ user.get_full_name }} ({{ user.username }}) <span class="caret"></span></a>
-                                <ul class="dropdown-menu" aria-labelledby="themes">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="user-options-menu">{{ user.get_full_name }} ({{ user.username }}) <span class="caret"></span></a>
+                                <ul class="dropdown-menu" aria-labelledby="user-options-menu">
                                     <li><a href="#">Edit Profile</a></li>
                                     <li><a href="#">Change Password</a></li>
                                     <li class="divider"></li>
@@ -69,6 +84,27 @@
     <div id="content">
         {% block content %}{% endblock %}
     </div>
+
+    <footer>
+    {% block footer %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-unstyled">
+                        <li class="pull-right"><a href="#top">Back to top</a></li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="https://github.com/j-bro/secret-santa-reboot/" target='_blank'>GitHub</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                    <p>Made by <a href="https://github.com/j-bro" rel="nofollow" target='_blank'>Jeremy Brown</a>.</p>
+                    <p>View the code on <a href="https://github.com/j-bro/secret-santa-reboot" target='_blank'>Github</a>. Released under the <a href="https://github.com/j-bro/secret-santa-reboot/blob/gh-pages/LICENSE" target='_blank'>MIT License</a>.</p>
+                    <p>Based on the <a href="http://getbootstrap.com" rel="nofollow" target='_blank'>Bootswatch</a> Flatly theme by <a href="https://thomaspark.co" rel="nofollow" target='_blank'>Thomas Park</a>.</p>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    </footer>
 
 </body>
 </html>

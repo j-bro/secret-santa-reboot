@@ -12,3 +12,7 @@ def index(request):
 def home(request):
     # return render(request, 'webapp/home.html')
     return redirect('group_list')
+
+
+def how_it_works(request):
+    return render(request, 'webapp/how_it_works.html')

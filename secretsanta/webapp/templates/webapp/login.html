@@ -2,34 +2,34 @@
 
 {% block title %}Login{% endblock %}
 
+{% block custom_head %}
+    {% load bootstrap3 %}
+{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+                <h1>Login</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-lg-6 col-lg-offset-3">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
             <div class="well bs-component">
-                <form class="form-horizontal" method="post" id="login-form" action="{% url 'login' %}">{% csrf_token %}
+                <form method="post" id="login-form" action="{% url 'login' %}">
+                    {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.GET.next }}" />
-                    <fieldset>
-                        <legend>Login</legend>
-                        <div class="form-group">
-                            <label for="inputUsername" class="col-lg-2 control-label">Username</label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="inputUsername" name="inputUsername" placeholder="Username" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAANJJREFUOBHdUzsOgzAMfaDOiIETcBjUDozcjetwh3CBdsnAgLiAa1uyG+gAtJ1qyYljv+dPAgBwY72z0kEV7JXV5QzZighHJeNVnJ+IcJGfYVZVhbZt3yjW1u7edR2FEAynibyDsiw9c1EUyHMPIY1lmXbuWEX1fY9pmtA0Deq6RowRwzAoKI05KzFeZRLnWVNn4jZtNuIRiEfws8XkDsZxNL/WuVi1eZ7NxLIsbothMSKC6FYs4+7Oz0j8jIbTPD/5kB7blg6cV5yvf6YDBf8a8gSLtXzq+l6rIQAAAABJRU5ErkJggg==); background-attachment: scroll; background-size: 16px 18px; cursor: auto; background-position: 98% 50%; background-repeat: no-repeat no-repeat;">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-                            <div class="col-lg-10">
-                                <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC); background-attachment: scroll; background-size: 16px 18px; cursor: auto; background-position: 98% 50%; background-repeat: no-repeat no-repeat;">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-10 col-lg-offset-2">
-                                <button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</button>
-                            </div>
-                        </div>
-                    </fieldset>
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                        <button type="submit" class="btn btn-primary">
+                            Login
+                        </button>
+                    {% endbuttons %}
                 </form>
             </div>
         </div>

@@ -41,12 +41,12 @@ def login_user(request):
 
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = AuthenticationForm(request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         # check whether it's valid:
         if form.is_valid():
             username = password = ''
-            username = request.POST['inputUsername']
-            password = request.POST['inputPassword']
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
 
             user = authenticate(username=username, password=password)
             if user is not None:

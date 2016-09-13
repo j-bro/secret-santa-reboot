@@ -60,7 +60,7 @@ def login_user(request):
     else:
         form = AuthenticationForm()
 
-    return render(request, 'webapp/registration/login.html', {'form': form})
+    return render(request, 'webapp/login.html', {'form': form})
 
 
 def logout_user(request):

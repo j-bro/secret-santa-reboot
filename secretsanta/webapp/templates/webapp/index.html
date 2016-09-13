@@ -9,7 +9,7 @@
                 <div class="jumbotron">
                     <h1>Secret Santa (Reboot)</h1>
                     <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                    <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+                    <p><a class="btn btn-primary btn-lg" href="{% url 'how_it_works' %}">Learn more</a></p>
                 </div>
             </div>
         </div>
@@ -22,13 +22,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3 text-center">
-                    <a class="btn btn-primary btn-lg" href="{% url 'signup' %}">Sign Up</a>
+                    <div class="button-group" role="group">
+                        <a class="btn btn-primary btn-lg " href="{% url 'signup' %}">Sign Up</a>
+                        <a class="btn btn-primary btn-lg" href="{% url 'login' %}">Login</a>
+                    </div>
+
                 </div>
             </div>
             <div class="row"><p></p></div>
         <div class="row">
                 <div class="col-lg-6 col-lg-offset-3 text-center">
-                    <a class="btn btn-primary btn-lg" href="{% url 'login' %}">Login</a>
+
                 </div>
             </div>
         </div>

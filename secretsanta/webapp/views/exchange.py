@@ -18,10 +18,10 @@ class ExchangeDetailView(generic.DetailView):
         if self.object.group.manager == self.request.user:
             context['exchange_editable'] = True
 
-        # TODO filter not working
         gift_list_obj = GiftList.objects.filter(exchange=self.object, user=self.request.user).first()
-        context['gift_list'] = json.dumps(gift_list_obj.gift_list)
-        # TODO fix if gift list doesn't exist
+        if gift_list_obj:
+            context['gift_list'] = json.dumps(gift_list_obj.gift_list)
+
         return context
 
 

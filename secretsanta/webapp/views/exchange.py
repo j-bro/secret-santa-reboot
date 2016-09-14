@@ -26,4 +26,6 @@ class ExchangeDetailView(generic.DetailView):
 
 
 class ExchangeCreateView(generic.CreateView):
-    pass
+    model = Exchange
+    template_name = 'webapp/exchange_create.html'
+    fields = ['name', 'description', 'group', 'end_date', 'price_cap']

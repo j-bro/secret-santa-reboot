@@ -22,4 +22,6 @@ class GroupDetailView(generic.DetailView):
 
 
 class GroupCreateView(generic.CreateView):
-    pass
+    model = PersonGroup
+    template_name = 'webapp/group_create.html'
+    fields = ['name', 'manager', 'members']

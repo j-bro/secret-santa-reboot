@@ -8,7 +8,7 @@ from webapp.models import PersonGroup
 
 @method_decorator(login_required, name='dispatch')
 class GroupListView(generic.ListView):
-    template_name = 'webapp/group_list.html'
+    template_name = 'webapp/persongroup_list.html'
     context_object_name = 'user_groups'
 
     def get_queryset(self):
@@ -19,12 +19,17 @@ class GroupListView(generic.ListView):
 @method_decorator(login_required, name='dispatch')
 class GroupDetailView(generic.DetailView):
     model = PersonGroup
-    template_name = 'webapp/group_detail.html'
+    template_name = 'webapp/persongroup_detail.html'
 
 
 class GroupCreateView(generic.CreateView):
     model = PersonGroup
-    template_name = 'webapp/group_create.html'
+    template_name = 'webapp/persongroup_create.html'
+    fields = ['name', 'manager', 'members']
+
+
+class GroupUpdateView(generic.UpdateView):
+    model = PersonGroup
     fields = ['name', 'manager', 'members']
 
 

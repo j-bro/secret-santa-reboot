@@ -32,6 +32,11 @@ class ExchangeCreateView(generic.CreateView):
     fields = ['name', 'description', 'group', 'end_date', 'price_cap']
 
 
+class ExchangeUpdateView(generic.UpdateView):
+    model = Exchange
+    fields = ['name', 'description', 'end_date', 'price_cap']
+
+
 class ExchangeDeleteView(generic.DeleteView):
     model = Exchange
     success_url = reverse_lazy('home')

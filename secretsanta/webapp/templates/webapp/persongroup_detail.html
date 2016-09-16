@@ -49,6 +49,7 @@
 
         <div class="row">
             <div class="col-lg-6">
+                <a class="btn btn-info" href="{% url 'group_update' object.id %}">Modify Group</a>
                 <a class="btn btn-warning">Transfer Group Ownership</a>
                 <a class="btn btn-danger" href="{% url 'group_delete' object.id %}">Delete Group</a>
             </div>

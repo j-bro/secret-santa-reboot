@@ -43,6 +43,12 @@ class Exchange(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('exchange_detail', kwargs={'pk': self.id})
 
+    def activate_exchange(self):
+        # TODO create draws
+
+        self.activated_date = date.today()
+        self.save()
+
 
 class Draw(models.Model):
     """

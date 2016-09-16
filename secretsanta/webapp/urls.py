@@ -31,10 +31,12 @@ urlpatterns = [
     url(r'^group/$', group.GroupListView.as_view(), name='group_list'),
     url(r'^group/create/$', group.GroupCreateView.as_view(), name='group_create'),
     url(r'^group/(?P<pk>[0-9]+)/$', group.GroupDetailView.as_view(), name='group_detail'),
+    url(r'^group/(?P<pk>[0-9]+)/update/$', group.GroupUpdateView.as_view(), name='group_update'),
     url(r'^group/(?P<pk>[0-9]+)/delete/$', group.GroupDeleteView.as_view(), name='group_delete'),
 
     url(r'^exchange/create/$', exchange.ExchangeCreateView.as_view(), name='exchange_create'),
     url(r'^exchange/(?P<pk>[0-9]+)/$', exchange.ExchangeDetailView.as_view(), name='exchange_detail'),
+    url(r'^exchange/(?P<pk>[0-9]+)/update/$', exchange.ExchangeUpdateView.as_view(), name='exchange_update'),
     url(r'^exchange/(?P<pk>[0-9]+)/delete/$', exchange.ExchangeDeleteView.as_view(), name='exchange_delete'),
 
     url(r'^$', main.index, name='index'),

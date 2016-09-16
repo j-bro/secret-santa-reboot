@@ -50,9 +50,10 @@ Make sure you generate & protect your secret keys...
 
 #### Production server
 You can use any WSGI-compatible production server to run the project.
-The easiest way to run it is using ```gunicorn```.
+The easiest way to run it is using [gunicorn](http://gunicorn.org).
 
-- ```gunicorn```
+- ```cd secretsanta```
+- ```gunicorn secretsanta.wsgi```
 
 ## Acknowlegements
 

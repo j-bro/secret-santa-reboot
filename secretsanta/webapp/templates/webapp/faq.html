@@ -1,0 +1,35 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Frequently Asked Questions</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script>
+        //turn to inline mode
+        $.fn.editable.defaults.mode = 'inline';
+        $(document).ready(function() {
+            $('#username').editable();
+        });
+    </script>
+
+    {{ block.super }}
+{% endblock %}

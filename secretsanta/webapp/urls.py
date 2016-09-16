@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^how-it-works', main.how_it_works, name='how_it_works'),
     url(r'^signup', auth.signup_user, name='signup'),
     url(r'^home', main.home, name='home'),
+    url(r'^faq', main.faq, name='faq'),
 
     url(r'^', include('django.contrib.auth.urls')),
 

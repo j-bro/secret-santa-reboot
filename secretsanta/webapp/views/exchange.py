@@ -40,3 +40,9 @@ class ExchangeUpdateView(generic.UpdateView):
 class ExchangeDeleteView(generic.DeleteView):
     model = Exchange
     success_url = reverse_lazy('home')
+
+
+class ExchangeActivateView(generic.View):
+
+    def get(self):
+        pass

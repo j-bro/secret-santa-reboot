@@ -6,8 +6,8 @@ A webapp to simplify your secret santa planning.
 
 ### Working
 - User signup & login/logout
-- Create a group
-- Create an exchange
+- Create, modify, delete a group
+- Create, modify, delete an exchange
 - View an exchange
 
 ### To do
@@ -25,7 +25,6 @@ This project is a work in progress. Below is a list of features still to be impl
 ### Development
 
 #### Clone the project
-```git clone ...```
 
 #### Install pip and virtualenv if you haven't already.
 

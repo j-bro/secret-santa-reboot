@@ -5,15 +5,13 @@ A webapp to simplify your secret santa planning.
 ## Features
 
 ### Working
-- User signup & login/logout
-- Create, modify, delete a group
-- Create, modify, delete an exchange
-- View an exchange
+- User signup, login, logout
+- Create, view, modify, delete a group
+- Create, view, modify, delete an exchange
 
 ### To do
 This project is a work in progress. Below is a list of features still to be implemented.
 
-- Group manager can modify an exchange
 - User can create/modify their gift list for a particular exchange
 - Limit viewing & choices by logged-in user permissions
 - Login by email instead of by username

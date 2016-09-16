@@ -2,6 +2,8 @@
 
 A webapp to simplify your secret santa planning.
 
+(REBOOT) because it's reviving my [pige-de-noel](https://github.com/j-bro/pige-de-noel) project.
+
 ## Features
 
 ### Working

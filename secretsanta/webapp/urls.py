@@ -20,8 +20,6 @@ from webapp.views import main, group, auth, exchange
 urlpatterns = [
 
     url(r'^how-it-works', main.how_it_works, name='how_it_works'),
-    # url(r'^login', auth.login_user, name='login'),
-    # url(r'^logout', auth.logout_user, name='logout'),
     url(r'^signup', auth.signup_user, name='signup'),
     url(r'^home', main.home, name='home'),
 
@@ -36,6 +34,7 @@ urlpatterns = [
 
     url(r'^exchange/create/$', exchange.ExchangeCreateView.as_view(), name='exchange_create'),
     url(r'^exchange/(?P<pk>[0-9]+)/$', exchange.ExchangeDetailView.as_view(), name='exchange_detail'),
+    url(r'^exchange/(?P<pk>[0-9]+)/delete/$', exchange.ExchangeDeleteView.as_view(), name='exchange_delete'),
 
     url(r'^$', main.index, name='index'),
 ]

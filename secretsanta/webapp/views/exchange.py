@@ -3,6 +3,7 @@ import json
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views import generic
+from django.urls import reverse_lazy
 
 from webapp.models import Exchange, GiftList
 
@@ -29,3 +30,8 @@ class ExchangeCreateView(generic.CreateView):
     model = Exchange
     template_name = 'webapp/exchange_create.html'
     fields = ['name', 'description', 'group', 'end_date', 'price_cap']
+
+
+class ExchangeDeleteView(generic.DeleteView):
+    model = Exchange
+    success_url = reverse_lazy('home')

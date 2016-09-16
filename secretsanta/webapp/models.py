@@ -2,6 +2,7 @@ from datetime import date
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 
 class PersonGroup(models.Model):
@@ -17,6 +18,9 @@ class PersonGroup(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse_lazy('group_detail', kwargs={'pk': self.id})
 
 
 class Exchange(models.Model):
@@ -35,6 +39,9 @@ class Exchange(models.Model):
 
     def __str__(self):
         return 'Exchange {}'.format(self.name)
+
+    def get_absolute_url(self):
+        return reverse_lazy('exchange_detail', kwargs={'pk': self.id})
 
 
 class Draw(models.Model):

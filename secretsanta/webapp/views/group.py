@@ -1,5 +1,6 @@
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 from django.views import generic
 
 from webapp.models import PersonGroup
@@ -25,3 +26,8 @@ class GroupCreateView(generic.CreateView):
     model = PersonGroup
     template_name = 'webapp/group_create.html'
     fields = ['name', 'manager', 'members']
+
+
+class GroupDeleteView(generic.DeleteView):
+    model = PersonGroup
+    success_url = reverse_lazy('group_list')

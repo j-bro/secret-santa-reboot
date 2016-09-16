@@ -14,7 +14,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib.auth import views
 
 from webapp.views import main, group, auth, exchange
 
@@ -33,6 +32,7 @@ urlpatterns = [
     url(r'^group/$', group.GroupListView.as_view(), name='group_list'),
     url(r'^group/create/$', group.GroupCreateView.as_view(), name='group_create'),
     url(r'^group/(?P<pk>[0-9]+)/$', group.GroupDetailView.as_view(), name='group_detail'),
+    url(r'^group/(?P<pk>[0-9]+)/delete/$', group.GroupDeleteView.as_view(), name='group_delete'),
 
     url(r'^exchange/create/$', exchange.ExchangeCreateView.as_view(), name='exchange_create'),
     url(r'^exchange/(?P<pk>[0-9]+)/$', exchange.ExchangeDetailView.as_view(), name='exchange_detail'),

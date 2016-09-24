@@ -10,6 +10,7 @@ A webapp to simplify your secret santa planning.
 - User signup, login, logout
 - Create, view, modify, delete a group
 - Create, view, modify, delete an exchange
+- Group manager can activate an exchange, which assigns a drawn member to each group member
 
 ### To do
 This project is a work in progress. Below is a list of features still to be implemented.

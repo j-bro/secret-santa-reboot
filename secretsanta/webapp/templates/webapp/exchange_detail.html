@@ -120,11 +120,26 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Your have drawn: <strong>{{ drawn_member }}</strong></h4>
+                            <h4 class="modal-title">Your have drawn:
+                                <strong>
+                                    {% if drawn_member.get_full_name %}
+                                        {{ drawn_member.get_full_name }}
+                                    {% else %}
+                                        {{ drawn_member.username }}
+                                    {% endif %}
+                                </strong>
+                            </h4>
                         </div>
                         <div class="modal-body">
                             <div class="panel panel-default">
-                                <div class="panel-heading">MEMBER NAME's Gift list</div>
+                                <div class="panel-heading">
+                                    {% if drawn_member.get_full_name %}
+                                        {{ drawn_member.get_full_name }}
+                                    {% else %}
+                                        {{ drawn_member.username }}
+                                    {% endif %}
+                                    's Gift list
+                                </div>
                                 <ul class="list-group">
                                         <li class="list-group-item">
                                             {{ drawn_member_gift_list }}

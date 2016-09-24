@@ -1,3 +1,4 @@
+import random
 from datetime import date
 
 from django.db import models
@@ -34,7 +35,7 @@ class Exchange(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     end_date = models.DateField(null=False)
-    activated_date = models.DateField(null=True)
+    activated_date = models.DateField(null=True, blank=True)
     price_cap = models.IntegerField()
 
     def __str__(self):
@@ -44,10 +45,26 @@ class Exchange(models.Model):
         return reverse_lazy('exchange_detail', kwargs={'pk': self.id})
 
     def activate_exchange(self):
-        # TODO create draws
-
+        self.create_draws()
         self.activated_date = date.today()
         self.save()
+        # TODO send emails
+
+    def create_draws(self):
+        exchange_members = list(self.group.members.all())
+        random.shuffle(exchange_members)
+        shifted_list = list(exchange_members)
+        shifted_list.append(shifted_list.pop(0))
+        for index, from_member in enumerate(exchange_members):
+            to_member = shifted_list[index]
+            self._make_draw(from_member, to_member)
+
+    def _make_draw(self, from_user, to_user):
+        draw = Draw()
+        draw.from_user = from_user
+        draw.to_user = to_user
+        draw.exchange = self
+        draw.save()
 
 
 class Draw(models.Model):
@@ -60,7 +77,8 @@ class Draw(models.Model):
     exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE, null=False, related_name='draws')
 
     def __str__(self):
-        return 'Draw by {} of {}'.format(self.from_user.get_full_name(), self.to_user.get_full_name())
+
+        return 'Draw by {} of {}'.format(get_user_full_name_or_username(self.from_user), get_user_full_name_or_username(self.to_user))
 
 
 class GiftList(models.Model):
@@ -77,3 +95,8 @@ class GiftList(models.Model):
             user_repr = self.user.username
 
         return 'Gift list of {} for exchange {}'.format(user_repr, self.exchange)
+
+
+# TODO find a better place for this
+def get_user_full_name_or_username(user):
+    return user.get_full_name() if user.get_full_name() else user.username

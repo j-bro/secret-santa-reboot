@@ -36,6 +36,7 @@ urlpatterns = [
 
     url(r'^exchange/create/$', exchange.ExchangeCreateView.as_view(), name='exchange_create'),
     url(r'^exchange/(?P<pk>[0-9]+)/$', exchange.ExchangeDetailView.as_view(), name='exchange_detail'),
+    url(r'^exchange/(?P<pk>[0-9]+)/activate/$', exchange.ExchangeActivateView.as_view(), name='exchange_activate'),
     url(r'^exchange/(?P<pk>[0-9]+)/update/$', exchange.ExchangeUpdateView.as_view(), name='exchange_update'),
     url(r'^exchange/(?P<pk>[0-9]+)/delete/$', exchange.ExchangeDeleteView.as_view(), name='exchange_delete'),
 

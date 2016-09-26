@@ -70,7 +70,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">Price Cap</div>
                         <div class="panel-body">
-                            <a href="#" id="price-cap" data-type="text" data-pk="" data-url="" data-title="Enter price cap">$ {{ object.price_cap|floatformat:2|intcomma }}</a>
+                            $ {{ object.price_cap|floatformat:2|intcomma }}
                         </div>
                     </div>
 
@@ -175,7 +175,7 @@
 
         <div class="row">
             <div class="col-lg-6">
-                <h2>Group Management</h2>
+                <h2>Exchange Management</h2>
                 <div class="btn-toolbar">
                     <a class="btn btn-info" href="{% url 'exchange_update' object.id %}">Modify Exchange</a>
                     <a class="btn btn-danger" href="{% url 'exchange_delete' object.id %}">Delete Exchange</a>

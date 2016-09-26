@@ -2,9 +2,10 @@ import json
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views import generic
 from django.urls import reverse_lazy
+from django.http import HttpResponse
 
 from webapp.models import Exchange, GiftList, Draw
 
@@ -58,6 +59,26 @@ class ExchangeDeleteView(generic.DeleteView):
 class ExchangeActivateView(generic.View):
 
     def get(self, request, pk):
-        model = Exchange.objects.get(pk=pk)
+        model = get_object_or_404(Exchange, pk=pk)
         model.activate_exchange()
         return redirect(model)
+
+
+@method_decorator(login_required, name='dispatch')
+class GiftListView(generic.View):
+
+    def get(self, request, pk, user_id):
+        model = get_object_or_404(GiftList, exchange=pk, user=user_id)
+        return HttpResponse(model.gift_list, content_type="application/json")
+
+    def post(self, request, pk, user_id):
+        model, created = GiftList.objects.get_or_create(exchange=pk, user=user_id)
+        post_list = request.POST.get('gift_list', None)
+        model.gift_list = post_list
+        status = 201 if created else 200
+        return HttpResponse(status=status)
+
+    def delete(self, request, pk, user_id):
+        model = get_object_or_404(GiftList, exchange=pk, user=user_id)
+        model.delete()
+        # TODO return success

@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^exchange/(?P<pk>[0-9]+)/activate/$', exchange.ExchangeActivateView.as_view(), name='exchange_activate'),
     url(r'^exchange/(?P<pk>[0-9]+)/update/$', exchange.ExchangeUpdateView.as_view(), name='exchange_update'),
     url(r'^exchange/(?P<pk>[0-9]+)/delete/$', exchange.ExchangeDeleteView.as_view(), name='exchange_delete'),
+    url(r'^exchange/(?P<pk>[0-9]+)/giftlist/(?P<user_id>[0-9]+)/$', exchange.GiftListView.as_view(), name='exchange_giftlist'),
 
     url(r'^$', main.index, name='index'),
 ]
